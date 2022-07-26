@@ -65,7 +65,9 @@ class _PlayButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           padding: const EdgeInsets.fromLTRB(15, 5, 20, 5)),
-      onPressed: () {},
+      onPressed: () {
+        print('Play');
+      },
       icon: const Icon(
         Icons.play_arrow,
         size: 30,

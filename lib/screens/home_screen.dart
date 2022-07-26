@@ -53,12 +53,15 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: CustomScrollView(
         controller: _scrollController,
-        slivers:  [
-         const SliverToBoxAdapter(
+        slivers: [
+          const SliverToBoxAdapter(
               child: ContentHeader(featuredContent: sintelContent)),
-              SliverPadding(padding: const EdgeInsets.only(top: 20),sliver: SliverToBoxAdapter(
-                child: Preview(title:'Previews',contentList:previews),
-              ),)
+          SliverPadding(
+            padding: const EdgeInsets.only(top: 20),
+            sliver: SliverToBoxAdapter(
+              child: Preview(title: 'Previews', contentList: previews),
+            ),
+          )
         ],
       ),
     );
