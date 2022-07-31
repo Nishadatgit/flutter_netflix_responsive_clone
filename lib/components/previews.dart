@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:netflix_responsive_ui_clone/models/content_model.dart';
 
 class Preview extends StatelessWidget {
