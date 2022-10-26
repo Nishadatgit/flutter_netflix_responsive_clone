@@ -1,13 +1,13 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:netflix_responsive_ui_clone/components/content_header.dart';
+import 'package:netflix_responsive_ui_clone/cubit/appbar/app_bar_cubit.dart';
 import 'package:netflix_responsive_ui_clone/data/data.dart';
 
 import '../components/appbar.dart';
 import '../components/content_list.dart';
 import '../components/previews.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,22 +17,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
- 
   ScrollController? _scrollController;
-   double _scrollOffset = 0.0;
 
   @override
   void initState() {
     _scrollController = ScrollController()
       ..addListener(() {
-        setState(() {
-          _scrollOffset = _scrollController!.offset;
-        });
+        BlocProvider.of<AppBarCubit>(context)
+            .setOffset(_scrollController!.offset);
       });
 
-    
-
-      
     super.initState();
   }
 
@@ -54,8 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       appBar: PreferredSize(
         preferredSize: Size(screenSize.width, 50),
-        child: CustomAppbar(
-          scrollOffset: _scrollOffset,
+        child: BlocBuilder<AppBarCubit, double>(
+          builder: (context, state) {
+            return CustomAppbar(
+              scrollOffset: state,
+            );
+          },
         ),
       ),
       body: CustomScrollView(
@@ -77,12 +75,12 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ContentList(
               title: 'My List',
               contentList: myList,
-               key: const PageStorageKey('myList'),
+              key: const PageStorageKey('myList'),
             ),
           ),
           SliverToBoxAdapter(
             child: ContentList(
-               key: const PageStorageKey('originals'),
+                key: const PageStorageKey('originals'),
                 title: 'Netflix originals',
                 contentList: originals,
                 isOriginals: true),
@@ -91,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.only(bottom: 20),
             sliver: SliverToBoxAdapter(
               child: ContentList(
-                 key: const PageStorageKey('trending'),
+                key: const PageStorageKey('trending'),
                 title: 'Trending',
                 contentList: trending,
               ),

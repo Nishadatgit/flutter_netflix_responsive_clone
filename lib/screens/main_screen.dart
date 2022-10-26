@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netflix_responsive_ui_clone/components/reponsive.dart';
 import 'package:netflix_responsive_ui_clone/screens/home_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -10,7 +11,9 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   static const List<Widget> _screens = [
-    HomeScreen(key: PageStorageKey('homeScreen'),),
+    HomeScreen(
+      key: PageStorageKey('homeScreen'),
+    ),
     Scaffold(),
     Scaffold(),
     Scaffold(),
@@ -30,34 +33,36 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: _items
-            .map(
-              (title, icon) => MapEntry(
-                title,
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      icon,
-                      size: 30,
+      bottomNavigationBar: !Responsive.isDesktop(context)
+          ? BottomNavigationBar(
+              items: _items
+                  .map(
+                    (title, icon) => MapEntry(
+                      title,
+                      BottomNavigationBarItem(
+                          icon: Icon(
+                            icon,
+                            size: 30,
+                          ),
+                          label: title),
                     ),
-                    label: title),
-              ),
+                  )
+                  .values
+                  .toList(),
+              currentIndex: _currentIndex,
+              selectedItemColor: Colors.white,
+              selectedFontSize: 11,
+              unselectedItemColor: Colors.grey,
+              unselectedFontSize: 11,
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.black,
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
             )
-            .values
-            .toList(),
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.white,
-        selectedFontSize: 11,
-        unselectedItemColor: Colors.grey,
-        unselectedFontSize: 11,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
+          : null,
     );
   }
 }
